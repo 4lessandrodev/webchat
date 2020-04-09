@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chat</title>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style media="screen">
+        body {width: 90%; margin: 0 auto; margin-top: 0; }
+        .send {width: 105%; margin: 0; padding: 0; margin-top: 1rem;}
+        input.text {width: 68%; margin: 0; padding: 0; padding: 5px; height: 10vh; font-size: medium;}
+        .btn {padding: 5px 0; width: 22%;  height: 12vh; background-color: rgb(26, 134, 161); border: 0; margin: 0;color: white; font-size: 1.2em;}
+        .btn:hover {background-color: #00e4bc}
+        ul {list-style-type: none;width: 100%;padding: 0;margin: 0; scroll-behavior: auto;}
+        li { padding: 5px 10px; }
+        li:nth-child(odd) {background-color: #eee}
+    </style>
+</head>
+<body>
+    <!--  Lista de mensagens -->
+    <img src="https://media1.giphy.com/media/jKiTvbzxh0pe8/source.gif" alt="imagem" style="height: 90px">
+    <div style="height: 65vh; scroll-behavior: auto; max-height: 70vh; border: 1px solid #ccc; overflow-y: scroll;" id="mensagens">
+        <ul class="ul" id="messages"></ul>
+    </div>
+    <!--  input com e botão de submit-->
+    <div class="send">
+        <input class='text' autofocus id="menssagem" autocomplete="off" placeholder="Digite sua mensagem" />
+        <button class='btn' id='enviar_menssagem'>Enviar</button>
+    </div>
+    
+    <!--  importar o client do socketIO-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        
+        //Lista de nome aleatorios 
+        var nomes = [
+        "Goku",
+        "Vedita",
+        "Goham",
+        "Gotem",
+        "Trunks",
+        "Mestre Kame",
+        "Yamtcha",
+        "Kuririm",
+        "Videl",
+        "Picolo",
+        "Bulma",
+        "Kami Sama",
+        "Majim boo",
+        "Mister Satam",
+        "Darte Vader",
+        "Pequeno Yoda",
+        "Mestre Yoda",
+        "Jedai",
+        "Leia",
+        "O lado negro",
+        "Perdido",
+        "Lobo Mal",
+        "Chapeuzinho",
+        "Eduard",
+        "Cristian Grey",
+        "Bob esponja",
+        "Naruto",
+        "Sask",
+        "Raposa",
+        "Frodo",
+        "Peter Parker",
+        "Venon",
+        "Sr Stark",
+        "Pops",
+        "Capitão America",
+        "Homem de ferro",
+        "Viuva negra",
+        "Hulk",
+        "Homem formiga",
+        "Fumiga",
+        "Ota Fumiga",
+        "Alcool em gel",
+        "Corona Vairus",
+        "Galinha Pintadinha"
+        ];
+        
+        // faz com que seja possível enviar mensagens com Enter
+        document.getElementById('menssagem').addEventListener('keypress', function(e) {
+            var key = e.which || e.keyCode;
+            if (key == 13) {
+                enviar_menssagem();
+            }
+        });
+        // inicia o client socketIO
+        var socket = io();
+        // Abre um popup perguntando o nome da pessoa
+        var nome_usuario = '';
+        swal("Informe seu apelido (Opcional)", {
+            content: "input",
+        })
+        .then((value) => {
+            if(value == undefined || value == '' || value == " " || value == null ){
+                nome_usuario = nomes[Math.floor(Math.random() * nomes.length)];
+                
+            }else{
+                // Caso usuário não informe um nome será atribuido um nome aleatório da lista
+                nome_usuario = value;
+                
+            }
+            socket.emit('chat message',`${nome_usuario} entrou na conversa`);
+        });
+        
+        
+        // adiciona um addEventListener para o botão de submit
+        document.getElementById('enviar_menssagem').addEventListener("click", enviar_menssagem);
+        // cria a função que conecta no websocket e emite a mensagem
+        function enviar_menssagem() {
+            // salva a mensagem como uma string
+            msg = document.getElementById('menssagem').value;
+            if (msg.length > 0) {
+                
+                // concatena o nome de usuário e a mensagem para enviar ao socketIo
+                socket.emit('chat message', `${nome_usuario}: ${msg}`);
+                // reseta o valor do input da mensagem
+                document.getElementById('menssagem').value = "";
+            }
+        }
+        // sempre que receber uma mensagem ela é adicionada a lista
+        socket.on('chat message', function(msg){
+            // busca o elemento UL
+            let ul = document.getElementById("messages");
+            // cria um elemento LI
+            let li = document.createElement('li');
+            // cria o elemento de quebra de linha
+            let br = document.createElement('br');
+            li.appendChild(document.createTextNode(msg));
+            // adicionar o nome do usuário quebra a linha e adicionar a mensagem à lista de mensagems
+            ul.appendChild(li);
+            //Rolar a pagina para o final
+            var mensagens = document.querySelector('#mensagens');
+            mensagens.scrollTo(0, mensagens.scrollHeight);
+        });
+        
+    </script>
+</body>
+</html>
