@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chat</title>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="shortcut icon" href="/img/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/style.css">
+    
+</head>
+<body>
+    <!--  Lista de mensagens -->
+    <img src="https://media1.giphy.com/media/jKiTvbzxh0pe8/source.gif" alt="imagem" style="height: 90px">
+    <div style="height: 65vh; scroll-behavior: auto; max-height: 70vh; border: 1px solid #ccc; overflow-y: scroll;" id="mensagens">
+        <ul class="ul" id="messages"></ul>
+    </div>
+    <audio controls hidden id="mensagem">
+        <source src="/audio/alert.mp3" type="audio/mpeg">
+    </audio>
+    <audio controls hidden id="entrar">
+        <source src="/audio/novo-user.mp3" type="audio/mpeg">
+    </audio>
+            <!--  input com e botão de submit-->
+            <%- include('./icones') %> 
+
+            <div class="send">
+                <input class='text' autofocus id="menssagem" autocomplete="off" placeholder="Digite sua mensagem" />
+                <div class="div-btn-icon">😀</div>
+                <button class='btn' id='enviar_menssagem'>Enviar</button>
+            </div>
+            
+            <!--  importar o client do socketIO-->
+            <script src="/socket.io/socket.io.js"></script>
+            <script src="/js/app.js"></script>
+        </body>
+        </html>
+        

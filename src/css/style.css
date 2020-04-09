@@ -1,0 +1,83 @@
+        body {
+          width: 86%;
+          margin: 0 auto;
+          margin-top: 0;
+        }
+        
+        .send {
+          width: 108%;
+          margin: 0;
+          padding: 0;
+          margin-top: 1rem;
+          position: relative;
+        }
+        
+        input.text {
+          width: 68%;
+          margin: 0;
+          padding: 0;
+          padding: 5px;
+          height: 10vh;
+          font-size: medium;
+        }
+        
+        .btn {
+          padding: 5px 0;
+          width: 22%;
+          height: 12vh;
+          background-color: rgb(26, 134, 161);
+          border: 0;
+          margin: 0;
+          color: white;
+          font-size: 1.2em;
+        }
+        
+        .btn:hover {
+          background-color: #00e4bc
+        }
+        
+        ul {
+          list-style-type: none;
+          width: 100%;
+          padding: 0;
+          margin: 0;
+          scroll-behavior: auto;
+        }
+        
+        li {
+          padding: 5px 10px;
+        }
+        
+        li:nth-child(odd) {
+          background-color: #eee
+        }
+        
+        .icons {
+          display: flex;
+          max-width: 81vw;
+          width: 81vw;
+          justify-content: center;
+          align-content: space-evenly;
+          justify-items: flex-start;
+          flex-wrap: wrap;
+          margin: 2vh;
+          padding: 2vh;
+        }
+        
+        .div-btn-icon {
+          display: block;
+          position: absolute;
+          right: 40%;
+          top: 28px;
+          width: 1px;
+          z-index: 5;
+          cursor: pointer;
+        }
+        
+        .display-none {
+          display: none;
+        }
+
+        .icone:hover{
+          cursor: pointer;
+        }
